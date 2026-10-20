@@ -20,9 +20,9 @@ def ask(h):
  return "https://claude.ai/new?q="+urllib.parse.quote(q)
 def card(h,up=""):
  s=f'<div class="card" data-s="{e(json.dumps(h,ensure_ascii=False).lower())}">'
- if h.get("ar"):s+=f'<div class="ar">{e(h["ar"])}</div>'
- if h.get("ps"):s+=f'<div class="ps">{e(h["ps"])}</div>'
- if h.get("en"):s+=f'<div>{e(h["en"])}</div>'
+ if h.get("ar"):s+=f'<div class="ar"><div class="ref" style="font-size:1rem">قال رسول الله ﷺ:</div>{e(h["ar"])}</div>'
+ if h.get("ps"):s+=f'<div class="ps"><div class="ref" style="font-size:1rem">رسول الله ﷺ فرمايلي:</div>{e(h["ps"])}</div>'
+ if h.get("en"):s+=f'<div><div class="ref" dir="ltr" style="font-size:1rem">The Messenger of Allah <bdi>ﷺ</bdi> said:</div>{e(h["en"])}</div>'
  s+=f'<div class="ref">📖 {e(h.get("ref",""))} · <a href="{up}h/{e(h["id"])}.html">link</a> · <a href="{up}c/{e(h["category"])}.html">{e(C.get(h["category"],{}).get("en",h["category"]))}</a> · <a href="{ask(h)}" target="_blank" rel="noopener">🤖 Ask AI</a></div></div>'
  return s
 urls=[""]
@@ -34,7 +34,7 @@ for k in C:
  page(f"c/{k}.html",f"{C[k].get('en',k)} - hadith",f"Hadith about {C[k].get('en',k)}","<h3>"+e(cname(k))+"</h3>"+"".join(card(h,"../") for h in hs),"../");urls.append(f"c/{k}.html")
 tags="".join(f'<a class="tag" href="c/{k}.html">{e(cname(k))}</a>' for k in C)
 js="<script>document.getElementById('q').oninput=function(){var v=this.value.toLowerCase();document.querySelectorAll('.card').forEach(function(c){c.style.display=c.dataset.s.indexOf(v)<0?'none':''})}</script>"
-page("index.html",N,"Hadith of Prophet Muhammad ﷺ in Arabic, Pashto and English with references.",f'<p>Hadith of Prophet Muhammad ﷺ · احادیث شریف · الأحاديث النبوية</p><p>📚 د احادیثو شمېر: <b>{len(D)}</b></p><div class="ref" dir="rtl" style="text-align:right;margin:14px 0">🤖 د AI ځوابونه ممکن تېروتنه ولري. د شرعي پوښتنو لپاره د یو دیني عالم څخه پوښتنه وکړئ.</div><div class="ref" dir="rtl" style="text-align:right;margin:14px 0">🤖 قد يخطئ الذكاء الاصطناعي. للأسئلة الشرعية، اسأل عالمًا دينيًا.</div><div class="ref" style="margin:14px 0">🤖 AI can make mistakes. For religious questions, ask a qualified religious scholar.</div><input id="q" placeholder="Search / لټون / بحث">'+tags+"".join(card(h) for h in D)+js)
+page("index.html",N,"Hadith of Prophet Muhammad ﷺ in Arabic, Pashto and English with references.",f'<p dir="ltr">Hadith of Prophet Muhammad <bdi>ﷺ</bdi> · <bdi>احادیث شریف</bdi> · <bdi>الأحاديث النبوية</bdi></p><p>📚 د احادیثو شمېر: <b>{len(D)}</b></p><div class="ref" dir="rtl" style="text-align:right;margin:14px 0">🤖 د AI ځوابونه ممکن تېروتنه ولري. د شرعي پوښتنو لپاره د یو دیني عالم څخه پوښتنه وکړئ.</div><div class="ref" dir="rtl" style="text-align:right;margin:14px 0">🤖 قد يخطئ الذكاء الاصطناعي. للأسئلة الشرعية، اسأل عالمًا دينيًا.</div><div class="ref" style="margin:14px 0">🤖 AI can make mistakes. For religious questions, ask a qualified religious scholar.</div><input id="q" placeholder="Search / لټون / بحث">'+tags+"".join(card(h) for h in D)+js)
 open(O+"/sitemap.xml","w").write('<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+"".join(f"<url><loc>{B}/{u}</loc></url>" for u in urls)+"</urlset>")
 open(O+"/robots.txt","w").write(f"User-agent: *\nAllow: /\nSitemap: {B}/sitemap.xml\n")
 print("built",len(D),"hadiths")
