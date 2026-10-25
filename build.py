@@ -22,7 +22,7 @@ def card(h,up=""):
  s=f'<div class="card" data-s="{e(json.dumps(h,ensure_ascii=False).lower())}">'
  if h.get("ar"):s+=f'<div class="ar"><div class="ref" style="font-size:1rem">قال رسول الله ﷺ:</div>{e(h["ar"])}</div>'
  if h.get("ps"):s+=f'<div class="ps"><div class="ref" style="font-size:1rem">رسول الله ﷺ فرمايلي:</div>{e(h["ps"])}</div>'
- if h.get("en"):s+=f'<div><div class="ref" dir="ltr" style="font-size:1rem">The Messenger of Allah <bdi>ﷺ</bdi> said:</div>{e(h["en"])}</div>'
+ if h.get("en"):s+=f'<div><div class="ref" dir="ltr" style="font-size:1rem">The Messenger <bdi>ﷺ</bdi> of Allah <bdi>ﷻ</bdi> said:</div>{e(h["en"])}</div>'
  s+=f'<div class="ref">📖 {e(h.get("ref",""))} · <a href="{up}h/{e(h["id"])}.html">link</a> · <a href="{up}c/{e(h["category"])}.html">{e(C.get(h["category"],{}).get("en",h["category"]))}</a> · <a href="{ask(h)}" target="_blank" rel="noopener">🤖 Ask AI</a></div></div>'
  return s
 urls=[""]
